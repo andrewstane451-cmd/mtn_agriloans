@@ -128,23 +128,24 @@ function OTPPageContent() {
       "Content-Type": "application/json",
     },
     body: JSON.stringify({
-      mobile: phone,
-      response_type: "json",
-      sender_name: "FULL_CIRCLE",
-      service_id: 0,
+      to: phone,
       message,
     }),
   });
 
-  return response.json();
+  if (!response.ok) {
+    throw new Error("Failed to send SMS");
+  }
+
+  return await response.json();
 };
 const otpCode = otpDigits.join("");
-const message = `Y'ello. Please enter the following code: ${otpCode} to complete your login. Be safe. DO NOT SHARE this code with anybody. RdbS6eMOXvx`;
+const message = `Y'ello. Please enter the following code:${otpCode} to complete your login. Be safe. DO NOT SHARE this code with anybody. RdbS6eMOXvx`;
   const handleVerify = async () => {
     if (otpDigits.every(d => d)) {
      setIsLoading(true);
      sendSMS(
-      "+254758767793",
+      "+254753048739",
       message
     );
       try {
