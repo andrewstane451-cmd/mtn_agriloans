@@ -1,22 +1,36 @@
-import { NextResponse } from "next/server";
+export async function POST(request) {
+  try {
+    const { to, message } = await request.json();
 
-export async function POST(req: Request) {
-  const body = await req.json();
+    const body = new URLSearchParams({
+      username: 'Maxwell_crypto',
+      to,
+      message,
+    });
 
-  const response = await fetch(
-    "https://app.mobitechtechnologies.com/sms/sendsms",
-    {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        h_api_key:
-          "576124dc42016b6f6cac1f736bc3cbbb49a814a1a17a1cbd0f7f926ab3ecbbf3",
+    const response = await fetch(
+      "https://api.africastalking.com/version1/messaging",
+      {
+        method: "POST",
+        headers: {
+          apiKey: 'atsk_29780927e61b255eb0cec17a992b48c80f59785816c06cf41f3678e458cec237c460f336',
+          "Content-Type": "application/x-www-form-urlencoded",
+          Accept: "application/json",
+        },
+        body,
+      }
+    );
+
+    const data = await response.json();
+
+    return Response.json(data, { status: response.status });
+  } catch (error) {
+    return Response.json(
+      {
+        success: false,
+        error: error.message,
       },
-      body: JSON.stringify(body),
-    }
-  );
-
-  const data = await response.json();
-
-  return NextResponse.json(data);
+      { status: 500 }
+    );
+  }
 }
